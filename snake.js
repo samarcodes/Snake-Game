@@ -22,16 +22,26 @@ function init() {
 				pen.fillStyle = this.color;
 				pen.fillRect(this.cells[i].x * cell_size, this.cells[i].y * cell_size, cell_size-2 , cell_size-2);
 			}
+		},
+		updateSnake:function() {
+			this.cells.pop();
+			var headX = this.cells[0].x;
+			var headY = this.cells[0].y;
+			var nextX = headX + 1;
+			var nextY = headY;
+			this.cells.unshift({x:nextX,y:nextY});
 		}
 	};
 
 	snake.createSnake();
 }
 function draw() {
+	//erase prev screen
+	pen.clearRect(0, 0, W, H); 
 	snake.drawSnake();
 }
 function update() {
-
+	snake.updateSnake();
 }
 function game_loop() {
 	draw();
