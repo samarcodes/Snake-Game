@@ -3,13 +3,22 @@ function init() {
 	W = canvas.width = 1000;
 	H = canvas.height = 1000;
 	pen = canvas.getContext('2d');
-	cell_size = 67;
+	cell_size = 66;
 	game_over = false;
+	score = 1;
+
+	//Create an image Object for food
+	food_img = new Image();
+	food_img.src = "Assets/apple.png";
+
+	//Create an image Object for trophy
+	trophy = new Image();
+	trophy.src = "Assets/trophy.png";
 
 	food = getRandomFood();
 
 	snake = {
-		init_len:5,
+		init_len:1,
 		color:"blue",
 		cells:[],
 		direction:"right",
@@ -35,6 +44,7 @@ function init() {
 			if(headX==food.x && headY==food.y) {
 				console.log("!!!Food eaten!!!");
 				food = getRandomFood();
+				score++;
 			}
 			else {
 				this.cells.pop();
@@ -93,8 +103,15 @@ function draw() {
 	//erase prev screen
 	pen.clearRect(0, 0, W, H); 
 	snake.drawSnake();
+
 	pen.fillStyle = food.color;
-	pen.fillRect(food.x * cell_size, food.y * cell_size, cell_size, cell_size);
+	pen.drawImage(food_img, food.x * cell_size, food.y * cell_size, cell_size, cell_size);
+
+	pen.drawImage(trophy, W-cell_size*2-5, 20, cell_size*2, cell_size*2);
+
+	pen.fillStyle = "blue";
+	pen.font = "40px Roboto";
+	pen.fillText(score-snake.init_len,W-cell_size-20,70);
 }
 function update() {
 	snake.updateSnake();
@@ -113,7 +130,7 @@ function getRandomFood() {
 function game_loop() {
 	if(game_over) {
 		clearInterval(f);
-		alert('Game Over');
+		alert('Game Over')
 	}
 	draw();
 	update();
