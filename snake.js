@@ -5,7 +5,7 @@ function init() {
 	pen = canvas.getContext('2d');
 	cell_size = 66;
 	game_over = false;
-	score = 1;
+	score = 5;
 
 	//Create an image Object for food
 	food_img = new Image();
@@ -18,7 +18,7 @@ function init() {
 	food = getRandomFood();
 
 	snake = {
-		init_len:1,
+		init_len:5,
 		color:"blue",
 		cells:[],
 		direction:"right",
